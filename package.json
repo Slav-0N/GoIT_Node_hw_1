@@ -1,0 +1,22 @@
+{
+  "name": "node_hw_1",
+  "version": "1.0.0",
+  "description": "Node_hw_1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Viacheslav_Sosiedko",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^11.1.0",
+    "nanoid": "3.3.4"
+  }
+}
