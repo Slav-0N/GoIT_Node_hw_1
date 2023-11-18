@@ -5,17 +5,6 @@ const contactsPath = path.join(process.cwd(), "/db/contacts.json");
 const getListContacts = require("./services/contactServices");
 const { error } = require("node:console");
 
-// async function listContacts() {
-//   try {
-//     const listOfElementsDb = await fs.readFile(contactsPath);
-//     const json = await JSON.parse(listOfElementsDb);
-//     console.table(json);
-//     return json;
-//   } catch (err) {
-//     (err) => console.log(err.message);
-//   }
-// }
-
 async function listContacts() {
   try {
     const list = await getListContacts().then((data) => console.table(data));
@@ -25,7 +14,6 @@ async function listContacts() {
 }
 
 function getContactById(contactId) {
-  // ...твій код. Повертає об'єкт контакту з таким id. Повертає null, якщо контакт з таким id не знайдений.
   fs.readFile(contactsPath)
     .then((data) => {
       const contArr = JSON.parse(data);
@@ -49,8 +37,6 @@ const writeNewContactToDb = async (path, dataFile) => {
 };
 
 function removeContact(contactId) {
-  // ...твій код. Повертає об'єкт видаленого контакту. Повертає null, якщо контакт з таким id не знайдений.
-
   const dataList = getListContacts()
     .then((data) => {
       const itemForRemove = data.find((item, index) => item.id === contactId);
@@ -77,8 +63,6 @@ const addContact = (name, email, phone) => {
     email: email,
     phone: phone,
   };
-  console.log("newItemObj--->", newItemObj);
-  // ...твій код. Повертає об'єкт доданого контакту.
   const dataList = getListContacts()
     .then((data) => {
       data.push(newItemObj);
