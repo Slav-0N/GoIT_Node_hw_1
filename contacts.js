@@ -67,7 +67,7 @@ const addContact = (name, email, phone) => {
     .then((data) => {
       data.push(newItemObj);
       writeNewContactToDb(contactsPath, data);
-      return dataList;
+      console.log(newItemObj);
     })
     .catch((err) => console.log(err.message));
 };
