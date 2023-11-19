@@ -7,24 +7,21 @@ const { error } = require("node:console");
 
 async function listContacts() {
   try {
-    const list = await getListContacts().then((data) => console.table(data));
+    const list = await getListContacts();
+    return list;
   } catch (error) {
     (error) => console.log(error.message);
   }
 }
 
-function getContactById(contactId) {
-  fs.readFile(contactsPath)
-    .then((data) => {
-      const contArr = JSON.parse(data);
-      const itemWasFind = contArr.find((item) => item.id === contactId);
-      if (itemWasFind) {
-        console.log(itemWasFind);
-      } else {
-        console.log(null);
-      }
-    })
-    .catch((err) => console.log(err.message));
+async function getContactById(contactId) {
+  try {
+    const contArr = await getListContacts();
+    const itemWasFind = contArr.find((item) => item.id === contactId);
+    return itemWasFind;
+  } catch (err) {
+    (err) => console.log(err.message);
+  }
 }
 
 const writeNewContactToDb = async (path, dataFile) => {
@@ -36,23 +33,18 @@ const writeNewContactToDb = async (path, dataFile) => {
   }
 };
 
-function removeContact(contactId) {
-  const dataList = getListContacts()
-    .then((data) => {
-      const itemForRemove = data.find((item, index) => item.id === contactId);
-      if (itemForRemove) {
-        console.log(itemForRemove);
-      } else {
-        console.log(null);
-      }
+async function removeContact(contactId) {
+  try {
+    const dataList = await getListContacts();
+    const itemForRemove = dataList.find((item) => item.id === contactId);
 
-      const newDb = data.filter((item) => item.id !== contactId);
-      writeNewContactToDb(contactsPath, newDb);
+    const newDb = dataList.filter((item) => item.id !== contactId);
 
-      return;
-    })
-
-    .catch((err) => console.log(err.message));
+    writeNewContactToDb(contactsPath, newDb);
+    return itemForRemove;
+  } catch (error) {
+    (err) => console.log(err.message);
+  }
 }
 
 const addContact = (name, email, phone) => {
