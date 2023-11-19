@@ -49,7 +49,13 @@ function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "add":
-      addContact(name, email, phone);
+      const addNewContact = async (name, email, phone) => {
+        try {
+          const newCont = await addContact(name, email, phone);
+          console.log(newCont);
+        } catch (error) {}
+      };
+      addNewContact(name, email, phone);
       break;
 
     case "remove":

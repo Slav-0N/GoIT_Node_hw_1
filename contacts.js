@@ -42,26 +42,28 @@ async function removeContact(contactId) {
 
     writeNewContactToDb(contactsPath, newDb);
     return itemForRemove;
-  } catch (error) {
+  } catch (err) {
     (err) => console.log(err.message);
   }
 }
 
-const addContact = (name, email, phone) => {
-  const idd = nanoid();
-  const newItemObj = {
-    id: idd,
-    name: name,
-    email: email,
-    phone: phone,
-  };
-  const dataList = getListContacts()
-    .then((data) => {
-      data.push(newItemObj);
-      writeNewContactToDb(contactsPath, data);
-      console.log(newItemObj);
-    })
-    .catch((err) => console.log(err.message));
+const addContact = async (name, email, phone) => {
+  try {
+    const idd = nanoid();
+    const newItemObj = {
+      id: idd,
+      name: name,
+      email: email,
+      phone: phone,
+    };
+
+    const dataList = await getListContacts();
+    dataList.push(newItemObj);
+    writeNewContactToDb(contactsPath, dataList);
+    return newItemObj;
+  } catch (err) {
+    (err) => console.log(err.message);
+  }
 };
 
 module.exports = {
